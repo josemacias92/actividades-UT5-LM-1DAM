@@ -1,8 +1,8 @@
 Emisor=>Sergio Primo
 Receptor=>Jose
-Jose: Hola primo!~10:12
-Jose: Qué tal estás?~10:12
-Sergio Primo: Ei primm, todo bien~11:03
-Sergio Primo: Como vas tu??~11:04
-Jose: Eii muy bien~11:24
-Sergio Primo: Genial tio~11:26
+Jose:- Hola primo!~10:12
+Jose:- Qué tal estás?~10:12
+Sergio Primo:- Ei primm, todo bien~11:03
+Sergio Primo:- Como vas tu??~11:04
+Jose:- Eii muy bien~11:24
+Sergio Primo:- Genial tio~11:26

@@ -20,7 +20,7 @@ function Cargar(fichero, primeraLectura) {
 
 function CrearInterfaz() {
     let cabecera = InsertarEnDOM(cuerpo, 'div', 'cabecera', '');
-    let botonAtras = InsertarEnDOM(cabecera, 'a', 'botonAtras', '<');
+    let botonAtras = InsertarEnDOM(cabecera, 'a', 'botonAtras', '');
     botonAtras.setAttribute('href', '../index.html');
     InsertarEnDOM(cabecera, 'div', 'fotoPerfil', '');
     InsertarEnDOM(cuerpo, 'div', 'areaMensajes', '');
@@ -108,7 +108,7 @@ function GenerarFormulario() {
     cuadroTexto.setAttribute('type', 'text');
     cuadroTexto.setAttribute('autofocus', 'autofocus');
     cuadroTexto.setAttribute('placeholder', 'Escribe un mensaje');
-    let botonEnviar = InsertarEnDOM(formulario, 'div', 'botonEnviar', '>>');
+    let botonEnviar = InsertarEnDOM(formulario, 'div', 'botonEnviar', '');
     return formulario;
 }
 
