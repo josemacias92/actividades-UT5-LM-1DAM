@@ -97,7 +97,7 @@ function RellenarBocadillo(bocadillo, nombre, contenido, hora) {
     InsertarEnDOM(bocadillo, 'div', 'remitente', nombre);
     let cuerpoMensaje = InsertarEnDOM(bocadillo, 'div', 'cuerpoMensaje', '');
     InsertarEnDOM(cuerpoMensaje, 'div', 'mensaje', contenido);
-    InsertarEnDOM(cuerpoMensaje, 'div', 'hora', hora);
+    InsertarEnDOM(cuerpoMensaje, 'div', 'hora', hora + '  ✔');
     let areaMensajes = document.getElementsByClassName('areaMensajes')[0];
     areaMensajes.scrollTop = areaMensajes.scrollHeight;
 }
