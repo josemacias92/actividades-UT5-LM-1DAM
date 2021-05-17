@@ -51,7 +51,7 @@ let envio = function EnviarMensaje(textoAEnviar) {
     let hoy = new Date();
     let hora = hoy.getHours() + ':' + hoy.getMinutes();
     let bocadillo = CrearBocadillo();
-    RellenarBocadillo(bocadillo, 'Tú', textoAEnviar, hora);
+    RellenarBocadillo(bocadillo, 'Tú', textoAEnviar, hora + '  ✔');
     bocadillo.classList.add('receptor');
     document.getElementsByClassName('cuadroTexto')[0].value = '';
     document.scrollTop = document.scrollHeight - document.clientHeight;;
@@ -97,7 +97,7 @@ function RellenarBocadillo(bocadillo, nombre, contenido, hora) {
     InsertarEnDOM(bocadillo, 'div', 'remitente', nombre);
     let cuerpoMensaje = InsertarEnDOM(bocadillo, 'div', 'cuerpoMensaje', '');
     InsertarEnDOM(cuerpoMensaje, 'div', 'mensaje', contenido);
-    InsertarEnDOM(cuerpoMensaje, 'div', 'hora', hora + '  ✔');
+    InsertarEnDOM(cuerpoMensaje, 'div', 'hora', hora);
     let areaMensajes = document.getElementsByClassName('areaMensajes')[0];
     areaMensajes.scrollTop = areaMensajes.scrollHeight;
 }
