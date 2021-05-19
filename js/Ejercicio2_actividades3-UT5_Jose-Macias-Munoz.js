@@ -77,8 +77,10 @@ async function Gestionar(textDoc, primeraLectura) {
         let nombre = mensaje[0].split(':- ')[0];
         let contenido = mensaje[0].split(':- ')[1];
 
-        if (nombre == receptor)
+        if (nombre == receptor) {
             bocadillo.classList.add('receptor');
+            hora += '  ✔';
+        }
         else
             bocadillo.classList.add('emisor');
 
