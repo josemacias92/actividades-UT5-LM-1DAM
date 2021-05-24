@@ -1,0 +1,126 @@
+* {
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#datos {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1 {
+    text-shadow: 10px 20px 20px grey;
+}
+
+h2 {
+    color: red;
+    font-style: italic;
+}
+
+.formulario {
+    display: flex;
+    flex-direction: column;
+    border: 5px solid dodgerblue;
+    border-radius: 30px;
+    background: linear-gradient(to bottom right, black, rgb(71, 71, 71), rgb(100, 100, 100));
+    padding: 30px; 
+    height: 270px; 
+    width: 550px; 
+    font-size: 1.3em; 
+    position: absolute; 
+    inset: 0px; 
+    margin: auto;
+}
+
+.etiqueta {
+    color: antiquewhite;
+}
+
+.campo {
+    margin: 15px;
+    margin-bottom: 30px;
+    padding: 8px;
+    border-radius: 7px;
+    outline: none;
+}
+
+.campoValidado:invalid {
+    background-color: lightcoral;
+    box-shadow: 10px 10px 10px rgb(59, 9, 9);
+}
+
+.campoValidado:valid {
+    box-shadow: 10px 10px 10px rgb(38, 41, 37);
+    background-color: gainsboro;
+}
+
+.botones {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row-reverse;
+    margin-top: 10px;
+}
+
+.boton {
+    border: 1px solid gold;
+    border-radius: 5px;
+    color: antiquewhite;
+    font-size: 0.8em;;
+    background: linear-gradient(100deg, rgb(100, 100, 100), black);
+    width: 150px;
+    padding: 10px;
+    align-self: center;
+    margin: 10px;
+    text-decoration: none;
+    text-align: center;
+}
+
+.boton:hover {
+    color: gold;
+}
+
+.boton:active {
+    background: linear-gradient(100deg, rgb(71, 71, 71), black);
+}
+
+.atras{
+    width: 129px;
+}
+
+.error {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    align-self: center;
+    visibility: hidden;
+    padding: 0;
+    font-size: 0.9em;
+    font-style: italic;;
+    color: rgb(255, 155, 124);
+    background-color: rgba(153, 0, 0, 0.808);
+    border: 2px double rgb(255, 156, 156);
+    position: absolute; 
+    z-index: 2; 
+    bottom: 19em;
+  }
+  
+  .error.activo {
+    height: 50px;
+    width: 550px;
+    visibility: visible;
+    padding: 0.5em;
+  }
+
+  .correcto {
+      background-color: rgba(6, 63, 6, 0.801);
+      color: rgb(236, 255, 151);
+      border: 2px double rgb(236, 255, 151);
+  }

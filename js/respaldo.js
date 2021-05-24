@@ -1,97 +1,138 @@
-document.addEventListener("DOMContentLoaded", Cargar("xml/libros.xml"));
+'use strict'
 
-function Cargar(fichero) {
+let fichero = "../sources/mensajes.txt";
+let cuerpo = document.getElementById('cuerpo');
+let mensajesLeidos = 0;
+
+document.addEventListener("DOMContentLoaded", CrearInterfaz);
+
+function Cargar(fichero, primeraLectura) {
     let http = new XMLHttpRequest();
     http.open("GET", fichero, true);
-    //http.setRequestHeader("Content-type", "text/xml");
     http.send();
     http.addEventListener('load', (event) => {
-        if (http.status === 200) {
-            Gestionar(http.responseXML)
+        if (http.status == 200) {
+            Gestionar(http.responseText, primeraLectura);
         }
-    })
+    });
+}
+
+function CrearInterfaz() {
+    let cabecera = InsertarEnDOM(cuerpo, 'div', 'cabecera', '');
+    let botonAtras = InsertarEnDOM(cabecera, 'a', 'botonAtras', '');
+    botonAtras.setAttribute('href', '../index.html');
+    InsertarEnDOM(cabecera, 'div', 'fotoPerfil', '');
+    InsertarEnDOM(cuerpo, 'div', 'areaMensajes', '');
+
+    Cargar(fichero, true);
+    setInterval(CargarMensajes, 5000);
+
+    let formulario = GenerarFormulario();
+    let cuadroTexto = formulario.getElementsByClassName('cuadroTexto')[0];
+    cuadroTexto.addEventListener('change', IntroducirMensaje);
+}
+
+let CargarMensajes = function () {
+    let hoy = new Date();
+    let hora = hoy.getHours() + ':' + hoy.getMinutes() + ':' + hoy.getSeconds();
+    console.log(hora);
+    Cargar(fichero, false);
+};
+
+function IntroducirMensaje() {
+    let cuadroTexto = document.getElementsByClassName('cuadroTexto')[0];
+    let textoAEnviar = cuadroTexto.value;
+    let botonEnviar = document.getElementsByClassName('botonEnviar')[0];
+
+    cuadroTexto.addEventListener('keydown', function envioEnter(e) {
+        alert('hoola');
+        let cuadroTexto = document.getElementsByClassName('cuadroTexto')[0];
+        let textoAEnviar = cuadroTexto.value;
+        if (e.key === 'Enter') {
+            envio(textoAEnviar);
+            e.preventDefault();
+        }
+    });
+
+    botonEnviar.addEventListener('click', envio(textoAEnviar));
+}
+
+
+
+let envio = function EnviarMensaje(textoAEnviar) {
+    let hoy = new Date();
+    let hora = hoy.getHours() + ':' + hoy.getMinutes();
+    let bocadillo = CrearBocadillo();
+    RellenarBocadillo(bocadillo, 'Tú', textoAEnviar, hora + '  ✔');
+    bocadillo.classList.add('receptor');
+    document.getElementsByClassName('cuadroTexto')[0].value = '';
+    document.scrollTop = document.scrollHeight - document.clientHeight;
+    document.getElementsByClassName('botonEnviar')[0].removeEventListener('click', envio);
+    let cuadroTexto = document.getElementsByClassName('cuadroTexto')[0];//.removeEventListener('keydown');
+    cuadroTexto.removeEventListener('keydown', envioEnter);
+    cuadroTexto.focus();
+}
+
+function Gestionar(textDoc, primeraLectura) {
+    let mensajes = textDoc.split(/\r\n|\n/);
+    let emisor = mensajes[0].split('=>')[1];
+    let receptor = mensajes[1].split('=>')[1];
+    mensajes.shift();
+    mensajes.shift();
+
+    if (primeraLectura) {
+        let cabecera = document.getElementsByClassName('cabecera')[0];
+        InsertarEnDOM(cabecera, 'div', 'nombreReceptor', emisor);
+    }
+
+    for (let i = mensajesLeidos; i < mensajes.length; i++) {
+        let bocadillo = CrearBocadillo();
+        let mensaje = mensajes[i].split('~');
+        let hora = mensaje[1];
+        let nombre = mensaje[0].split(':- ')[0];
+        let contenido = mensaje[0].split(':- ')[1];
+
+        if (nombre == receptor) {
+            bocadillo.classList.add('receptor');
+            hora += '  ✔';
+        }
+        else
+            bocadillo.classList.add('emisor');
+
+        RellenarBocadillo(bocadillo, nombre, contenido, hora);
+        mensajesLeidos++;
+    }
+}
+
+function CrearBocadillo() {
+    let areaMensajes = document.getElementsByClassName('areaMensajes')[0];
+    let bocadillo = InsertarEnDOM(areaMensajes, 'div', 'bocadillo', '');
+    return bocadillo;
+}
+
+function RellenarBocadillo(bocadillo, nombre, contenido, hora) {
+    InsertarEnDOM(bocadillo, 'div', 'remitente', nombre);
+    let cuerpoMensaje = InsertarEnDOM(bocadillo, 'div', 'cuerpoMensaje', '');
+    InsertarEnDOM(cuerpoMensaje, 'div', 'mensaje', contenido);
+    InsertarEnDOM(cuerpoMensaje, 'div', 'hora', hora);
+    let areaMensajes = document.getElementsByClassName('areaMensajes')[0];
+    areaMensajes.scrollTop = areaMensajes.scrollHeight;
+}
+
+function GenerarFormulario() {
+    let formulario = InsertarEnDOM(cuerpo, 'form', 'formulario', '');
+    let cuadroTexto = InsertarEnDOM(formulario, 'input', 'cuadroTexto', '');
+    cuadroTexto.setAttribute('type', 'textarea');
+    cuadroTexto.focus();
+    cuadroTexto.setAttribute('placeholder', 'Escribe un mensaje');
+    InsertarEnDOM(formulario, 'div', 'botonEnviar', '');
+    return formulario;
 }
 
 function InsertarEnDOM(elementoPadre, etiqueta, clase, contenido) {
-
     let nodo = document.createElement(etiqueta);
     nodo.classList.add(clase);
     nodo.textContent = contenido;
     elementoPadre.appendChild(nodo);
     return nodo;
-}
-
-function Gestionar(xmlDoc) {
-
-    let librerias = xmlDoc.querySelectorAll('libreria');
-    librerias.forEach(libreria => {
-
-        let cuerpo = document.querySelector('body');
-        let tabla = document.createElement('div');
-        tabla.classList.add('tabla');
-        cuerpo.appendChild(tabla);
-        //Crear cabecera con nombre de la libreria
-        let nombre = libreria.getElementsByTagName('nombre')[0].childNodes[0].nodeValue;
-        InsertarEnDOM(tabla, 'div', 'cabecera', nombre);
-        //Crear cada fila
-        let fila = document.createElement('div');
-        fila.classList.add('fila');
-        tabla.appendChild(fila);
-
-        let elementosLibro = [];
-
-        elementosLibro[0] = 'ISBN';
-        elementosLibro[1] = 'Título';
-        elementosLibro[2] = 'Nivel';
-        elementosLibro[3] = 'Autor';
-        elementosLibro[4] = 'Editorial';
-        elementosLibro[5] = 'Fecha Publicación';
-        elementosLibro[6] = 'Página Web';
-        elementosLibro[7] = 'Precio';
-
-        for (let i = 0; i < elementosLibro.length; i++) {
-
-            let contenido = elementosLibro[i];
-            InsertarEnDOM(tabla, 'div', 'cabeza', contenido);
-        }
-
-        let libros = libreria.querySelectorAll('libro');
-        libros.forEach(libro => {
-
-            fila = document.createElement('div');
-            fila.classList.add('fila');
-            tabla.appendChild(fila);
-
-            elementosLibro[0] = libro.getElementsByTagName('ISBN')[0].childNodes[0].nodeValue;
-            elementosLibro[1] = libro.getElementsByTagName('titulo')[0].childNodes[0].nodeValue;
-            elementosLibro[2] = libro.getElementsByTagName('nivelProfundidad')[0].childNodes[0].nodeValue;
-            elementosLibro[3] = libro.getElementsByTagName('autores')[0].childNodes[1].firstChild.nodeValue;
-            elementosLibro[4] = libro.getElementsByTagName('editorial')[0].childNodes[0].nodeValue;
-            elementosLibro[5] = libro.getElementsByTagName('fechaPublicacion')[0].childNodes[0].nodeValue;
-            elementosLibro[6] = libro.getElementsByTagName('paginaWeb')[0].childNodes[0].nodeValue;
-            elementosLibro[7] = libro.getElementsByTagName('precio')[0].childNodes[0].nodeValue;
-
-            let precios = libreria.getElementsByTagName('precio');
-            let valores = [];
-            valores[0] = precios[0].childNodes[0].nodeValue;
-            valores[1] = precios[1].childNodes[0].nodeValue;
-            valores[2] = precios[2].childNodes[0].nodeValue;
-            valores.sort(function (a, b) { return a - b; })
-
-            for (let i = 0; i < elementosLibro.length; i++) {
-
-                let nodo;
-                let contenido = elementosLibro[i];
-
-                if (i != 7)
-                    nodo = InsertarEnDOM(tabla, 'div', 'col', contenido);
-                else {
-                    nodo = InsertarEnDOM(tabla, 'div', 'precio', contenido);                  
-                }
-
-                if (elementosLibro[7] == valores[0])
-                    nodo.classList.add('barato');
-            }
-        });
-    });
 }

@@ -8,7 +8,6 @@ document.addEventListener("DOMContentLoaded", CrearInterfaz);
 
 function Cargar(fichero, primeraLectura) {
     let http = new XMLHttpRequest();
-    let textDoc;
     http.open("GET", fichero, true);
     http.send();
     http.addEventListener('load', (event) => {
@@ -26,7 +25,7 @@ function CrearInterfaz() {
     InsertarEnDOM(cuerpo, 'div', 'areaMensajes', '');
 
     Cargar(fichero, true);
-    var intervalo = setInterval(CargarMensajes, 5000);
+    setInterval(CargarMensajes, 5000);
 
     let formulario = GenerarFormulario();
     let cuadroTexto = formulario.getElementsByClassName('cuadroTexto')[0];
@@ -42,12 +41,12 @@ let CargarMensajes = function () {
 
 function IntroducirMensaje() {
     let cuadroTexto = document.getElementsByClassName('cuadroTexto')[0];
-    let textoAEnviar = cuadroTexto.value;
     let botonEnviar = document.getElementsByClassName('botonEnviar')[0];
-    botonEnviar.addEventListener('click', envio(textoAEnviar));
+    botonEnviar.addEventListener('click', envio(cuadroTexto));
 }
 
-let envio = function EnviarMensaje(textoAEnviar) {
+let envio = function EnviarMensaje(cuadroTexto) {
+    let textoAEnviar = cuadroTexto.value;
     let hoy = new Date();
     let hora = hoy.getHours() + ':' + hoy.getMinutes();
     let bocadillo = CrearBocadillo();
@@ -56,9 +55,10 @@ let envio = function EnviarMensaje(textoAEnviar) {
     document.getElementsByClassName('cuadroTexto')[0].value = '';
     document.scrollTop = document.scrollHeight - document.clientHeight;;
     document.getElementsByClassName('botonEnviar')[0].removeEventListener('click', envio);
+    cuadroTexto.focus();
 }
 
-async function Gestionar(textDoc, primeraLectura) {
+function Gestionar(textDoc, primeraLectura) {
     let mensajes = textDoc.split(/\r\n|\n/);
     let emisor = mensajes[0].split('=>')[1];
     let receptor = mensajes[1].split('=>')[1];
@@ -108,9 +108,9 @@ function GenerarFormulario() {
     let formulario = InsertarEnDOM(cuerpo, 'form', 'formulario', '');
     let cuadroTexto = InsertarEnDOM(formulario, 'input', 'cuadroTexto', '');
     cuadroTexto.setAttribute('type', 'text');
-    cuadroTexto.setAttribute('autofocus', 'autofocus');
+    cuadroTexto.focus();
     cuadroTexto.setAttribute('placeholder', 'Escribe un mensaje');
-    let botonEnviar = InsertarEnDOM(formulario, 'div', 'botonEnviar', '');
+    InsertarEnDOM(formulario, 'div', 'botonEnviar', '');
     return formulario;
 }
 
