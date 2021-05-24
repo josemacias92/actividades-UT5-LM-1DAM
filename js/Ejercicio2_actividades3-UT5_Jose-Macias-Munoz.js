@@ -30,6 +30,13 @@ function CrearInterfaz() {
     let formulario = GenerarFormulario();
     let cuadroTexto = formulario.getElementsByClassName('cuadroTexto')[0];
     cuadroTexto.addEventListener('change', IntroducirMensaje);
+    cuadroTexto.addEventListener('input', function () {
+
+        formulario.getElementsByClassName('botonEnviar')[0].classList.add('activo');
+        if (cuadroTexto.value == '') {
+            formulario.getElementsByClassName('botonEnviar')[0].className = ('botonEnviar');
+        }
+    });
 }
 
 let CargarMensajes = function () {
@@ -40,12 +47,16 @@ let CargarMensajes = function () {
 };
 
 function IntroducirMensaje() {
+
     let cuadroTexto = document.getElementsByClassName('cuadroTexto')[0];
     let botonEnviar = document.getElementsByClassName('botonEnviar')[0];
+    botonEnviar.classList.add('activo');
     botonEnviar.addEventListener('click', envio(cuadroTexto));
+    document.getElementsByClassName('formulario')[0].addEventListener('submit', (e) => e.preventDefault());
 }
 
 let envio = function EnviarMensaje(cuadroTexto) {
+
     let textoAEnviar = cuadroTexto.value;
     let hoy = new Date();
     let hora = hoy.getHours() + ':' + hoy.getMinutes();
@@ -54,8 +65,15 @@ let envio = function EnviarMensaje(cuadroTexto) {
     bocadillo.classList.add('receptor');
     document.getElementsByClassName('cuadroTexto')[0].value = '';
     document.scrollTop = document.scrollHeight - document.clientHeight;;
-    document.getElementsByClassName('botonEnviar')[0].removeEventListener('click', envio);
+    let botonEnviar = document.getElementsByClassName('botonEnviar')[0];
+    botonEnviar.classList.add('click');
+    botonEnviar.removeEventListener('click', envio);
     cuadroTexto.focus();
+    setTimeout(ReanudarBoton, 300);
+}
+
+let ReanudarBoton = function (){
+    document.getElementsByClassName('botonEnviar')[0].className = ('botonEnviar');
 }
 
 function Gestionar(textDoc, primeraLectura) {

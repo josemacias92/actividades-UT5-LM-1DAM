@@ -34,23 +34,24 @@ document.addEventListener("DOMContentLoaded", function (event) {
         campoEmail.setCustomValidity("");
         campoContrasena.setCustomValidity("");
         //jose.macias@iesdoctorbalmis.com
+        event.preventDefault();
 
         if (!campoEmail.validity.valid || campoEmail.value == null || campoEmail.value.length == 0 || /^\s*$/.test(campoEmail.value)) {
             campoEmail.setCustomValidity("No se permiten campos vacíos o espacios.");
             error.classList.add('activo');
             error.textContent = 'Debe introducir una dirección de correo electrónico de dominio @iesdoctorbalmis.com';
-            event.preventDefault();
+            //event.preventDefault();
         } else if (!campoContrasena.validity.valid || campoContrasena.value == null || campoContrasena.value.length == 0 || /^\s*$/.test(campoContrasena.value)) {
             campoEmail.setCustomValidity("");
             campoContrasena.setCustomValidity("No se permiten campos vacíos o espacios.")
             error.classList.add('activo');
             error.textContent = 'Debe introducir una contraseña de 8 dígitos';
-            event.preventDefault();
+            //event.preventDefault();
         } else {
             error.innerHTML = 'Se ha registrado el usuario \"' + campoEmail.value + '\" corectamente.';
             error.classList.add('correcto');
             error.classList.add('activo');
-            //error.className = 'error';
+            setTimeout(enviar, 1000);
         }
 
         formulario.addEventListener('input', function (event) {
@@ -59,6 +60,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
         });
     });
 });
+
+let enviar = function() {
+    document.getElementsByClassName('formulario')[0].submit();
+}
 
 function InsertarEnDOM(elementoPadre, etiqueta, clase, contenido) {
     let nodo = document.createElement(etiqueta);
