@@ -1,0 +1,139 @@
+* {
+    /*font-family:Arial, Helvetica, sans-serif;*/
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#datos {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+h1 {
+    text-shadow: 10px 20px 20px grey;
+}
+
+#datos > h2 {
+    color: red;
+    font-style: italic;
+}
+
+.formulario {
+    display: flex;
+    flex-direction: column;
+    border: 2px solid darkorange;
+    border-radius: 20px;
+    padding: 20px; 
+    height: min-content; 
+    width: 470px; 
+    font-size: 1.3em; 
+
+    margin-top: 20px;
+}
+
+.cabecera {
+    color: darkorange;
+    text-align: center;
+    margin-top: 0;
+}
+
+.etiqueta {
+    font-size: 0.7em;
+}
+
+.requerido {
+    color: red;
+    font-weight: bolder;
+}
+
+.fila {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 60px;
+    margin-right: 60px;
+}
+
+.campo {
+    margin: 5px;
+    padding: 3px;
+    border-radius: 5px;
+    outline: none;
+}
+
+.campoValidado:invalid {
+    box-shadow: 0px 0px 10px red;
+    border: 2px solid red;
+}
+
+.campoValidado:valid {
+    box-shadow: 0px 0px 10px green;
+    border: 2px solid green;
+}
+
+.boton {
+    border: 1px solid gold;
+    border-radius: 5px;
+    color: antiquewhite;
+    font-size: 0.65em;
+    font-family: Arial, Helvetica, sans-serif;
+    background: darkorange;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 20px;
+    padding-right: 20px;
+    align-self: center;
+    margin-top: 20px;
+    text-decoration: none;
+    text-align: center;
+    border: 2px outset blanchedalmond;
+}
+
+.boton:hover {
+    color: gold;
+}
+
+.boton:active {
+    background: rgb(175, 96, 0);
+}
+
+.atras{
+    font-size: 1em;
+    align-self: center;
+    border: none;
+    width: 90px;
+    padding: 15px;
+    box-shadow: 10px 10px 10px grey;
+    margin-top: 40px;
+}
+
+.error {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 0.8em;
+    font-style: italic;;
+    color: rgb(255, 155, 124);
+    background-color: floralwhite;
+    height: min-content;
+    width: inherit;
+    margin-top: 10px;
+  }
+
+.notificacion
+{
+    margin-left: 10px;
+}
+
+.correcto {
+      background-color: rgba(103, 197, 80, 0.753);
+      color: rgb(253, 255, 121); 
+      align-items: center;
+  }
