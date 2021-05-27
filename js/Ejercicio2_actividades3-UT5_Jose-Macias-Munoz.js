@@ -77,7 +77,6 @@ let ReanudarBoton = function (){
 }
 
 function Gestionar(textDoc, primeraLectura) {
-    
     let mensajes = textDoc.split(/\r\n|\n/);
     let emisor = mensajes[0].split('=>')[1];
     let receptor = mensajes[1].split('=>')[1];
