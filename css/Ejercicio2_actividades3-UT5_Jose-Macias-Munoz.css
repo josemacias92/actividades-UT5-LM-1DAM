@@ -252,6 +252,12 @@ body {
     .fotoPerfil{
         width: 55px;
         height: 55px;
+        background-image: url("../img/avatar_mini.jpg");
+    }
+
+    .areaMensajes{
+        min-height: 20%;
+        max-height: 80%;
     }
 
     .nombreReceptor {
@@ -272,5 +278,9 @@ body {
 
     .bocadillo {
         max-width: 70%;
+    }
+
+    .botonEnviar.activo:hover {
+        background-image: url("../img/send.png");
     }
 }
