@@ -3,6 +3,8 @@
 let fichero = "../sources/mensajes.txt";
 let cuerpo = document.getElementById('cuerpo');
 let mensajesLeidos = 0;
+let receptor;
+let emisor;
 
 document.addEventListener("DOMContentLoaded", CrearInterfaz);
 
@@ -78,8 +80,8 @@ let ReanudarBoton = function (){
 
 function Gestionar(textDoc, primeraLectura) {
     let mensajes = textDoc.split(/\r\n|\n/);
-    let emisor = mensajes[0].split('=>')[1];
-    let receptor = mensajes[1].split('=>')[1];
+    emisor = mensajes[0].split('=>')[1];
+    receptor = mensajes[1].split('=>')[1];
     mensajes.shift();
     mensajes.shift();
 
@@ -89,22 +91,27 @@ function Gestionar(textDoc, primeraLectura) {
     }
 
     for (let i = mensajesLeidos; i < mensajes.length; i++) {
-        let bocadillo = CrearBocadillo();
-        let mensaje = mensajes[i].split('~');
-        let hora = mensaje[1];
-        let nombre = mensaje[0].split(':- ')[0];
-        let contenido = mensaje[0].split(':- ')[1];
-
-        if (nombre == receptor) {
-            bocadillo.classList.add('receptor');
-            hora += '  ✔';
-        }
-        else
-            bocadillo.classList.add('emisor');
-
-        RellenarBocadillo(bocadillo, nombre, contenido, hora);
+        setTimeout(leerUnMensaje, 700 * i, mensajes[i])
         mensajesLeidos++;
     }
+}
+
+function leerUnMensaje(mensajeALeer){
+    
+    let bocadillo = CrearBocadillo();
+    let mensaje = mensajeALeer.split('~');
+    let hora = mensaje[1];
+    let nombre = mensaje[0].split(':- ')[0];
+    let contenido = mensaje[0].split(':- ')[1];
+
+    if (nombre == receptor) {
+        bocadillo.classList.add('receptor');
+        hora += '  ✔';
+    }
+    else
+        bocadillo.classList.add('emisor');
+
+    RellenarBocadillo(bocadillo, nombre, contenido, hora);
 }
 
 function CrearBocadillo() {
