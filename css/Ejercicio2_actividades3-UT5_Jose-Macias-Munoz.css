@@ -246,8 +246,7 @@ body {
 @media (max-width: 600px) {
     #cuerpo {
         width: fit-content;
-        min-height: 350px;
-        max-height: 650px;
+        height: 650px;
     }
 
     .fotoPerfil{
